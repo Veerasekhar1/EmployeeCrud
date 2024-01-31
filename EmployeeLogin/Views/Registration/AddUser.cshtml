@@ -1,0 +1,26 @@
+﻿@model EmployeeLogin.Models.RegisterModel
+<h2>RegistrationDetails</h2>
+<html>
+<body>
+    <form asp-controller="Registration" asp-action="AddUser" method="post">
+        <table>
+            <tr>
+                <td><label asp-for="RuserName">User_Name</label></td>
+                <td><input asp-for="RuserName" /></td>
+            </tr>
+            <tr>
+                <td><label asp-for="Rpassword">User_Pwd</label></td>
+                <td><input asp-for="Rpassword" /></td>
+            </tr>
+            <td>
+                <input type="submit" value="Save" />
+            </td>
+            <td>
+                <a asp-controller="Login" asp-action="LoginCheck">
+                    <button type="button" > Cancel </button>
+                </a>
+            </td>
+        </table>
+    </form>
+</body>
+</html>
