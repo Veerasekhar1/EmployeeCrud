@@ -1,0 +1,28 @@
+﻿@model EmployeeLogin.Models.EmployeeModel
+<h2>Login</h2>
+
+<form asp-controller="LoginEmployee" asp-action="CheckLogin" method="post">
+    <table>
+        <tr>
+            <td><label asp-for="Name">Username</label></td>
+            <td><input asp-for="Name" /></td>
+            <td><span asp-validation-for="Name"></span></td>
+        </tr>
+        <tr>
+            <td><label asp-for="Password">Password</label></td>
+            <td><input asp-for="Password" /></td>
+            <td><span asp-validation-for="Password"></span></td>
+        </tr>
+        <td>
+            <input type="submit" value="Login" />
+        </td>
+        <td>
+            @*  @Html.ActionLink("Signin", "AddUser", "Registare") *@@*
+            <a asp-controller="Registare" asp-action="AddUser">Signin</a> *@
+            <a asp-controller="Registare" asp-action="AddUser">Signin</a>
+        </td>
+    </table>
+</form>
+
+<span>@ViewBag.message</span>
+
