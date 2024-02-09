@@ -1,23 +1,31 @@
+using EmployeeLogin.Models;
+using Microsoft.Extensions.DependencyInjection;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddScoped<IEmployeeCrud, EmployeeRepositoryCrud>(sp =>
+    new EmployeeRepositoryCrud(connectionString));
+
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddAuthorization();
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
 }
+
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=EmployeeCrud}/{action=Details}/{id?}");
 
 app.Run();

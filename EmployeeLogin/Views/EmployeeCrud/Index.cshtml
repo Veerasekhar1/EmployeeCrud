@@ -1,0 +1,39 @@
+﻿@model IEnumerable<EmployeeLogin.Models.EmployeeModelCrud>
+
+<h2>Employee List</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>City</th>
+            <th>Address</th>
+            <th>Hobbies</th>
+            <th>Gender</th>
+            <th>Country</th>
+            <!-- Add other table headers for City, Address, Hobbies, Gender, Country -->
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr>
+                <td>@employee.Id</td>
+                <td>@employee.Name</td>
+                <td>@employee.City</td>instance of an object.'
+                <td>@employee.Address</td>
+                <td>@employee.Hobbies</td>
+                <td>@employee.Gender</td>
+                <td>@employee.Country</td>
+                <!-- Add other table cells for City, Address, Hobbies, Gender, Country -->
+                <td>
+                    <a asp-action="Details" asp-route-id="@employee.Id">Details</a> |
+                    <a asp-action="Edit" asp-route-id="@employee.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@employee.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
