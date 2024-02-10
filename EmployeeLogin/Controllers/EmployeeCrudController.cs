@@ -12,11 +12,12 @@ namespace EmployeeLogin.Controllers
             _employeeRepository = employeeRepository;
         }
 
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
-        
+        public IActionResult Index()
+        {
+            var employees = _employeeRepository.GetEmployee();
+            return View("Index", employees);
+        }
+
         public IActionResult Details(int id)
         {
             EmployeeModelCrud employee = _employeeRepository.GetEmployee(id);
@@ -36,10 +37,18 @@ namespace EmployeeLogin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(EmployeeModelCrud employee)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _employeeRepository.SaveEmployee(employee);
-                 return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _employeeRepository.SaveEmployee(employee);
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch(Exception ex)
+            {
+                ViewBag.message = "RECOR IS NOT INSERT: " + ex.Message;
+                return View(nameof(Index));
             }
 
             return View(employee);
@@ -77,12 +86,11 @@ namespace EmployeeLogin.Controllers
 
             return View(employee);
         }
-        public IActionResult Index()
-        {
-            var employees = _employeeRepository.GetEmployee();
-            return View("Index");
 
-        }
+
+
+
+
         public IActionResult Delete(int? id)
         {
             if (id == null)

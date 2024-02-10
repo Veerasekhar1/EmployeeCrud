@@ -13,6 +13,7 @@ namespace EmployeeLogin.Models
             Console.WriteLine($"Connection String: {connectionString}");
             _connectionString = connectionString;
         }
+        
 
         public EmployeeModelCrud GetEmployee(int id)
         {
@@ -56,9 +57,10 @@ namespace EmployeeLogin.Models
             return employee;
         }
 
-        public object GetEmployee()
+        public IEnumerable<EmployeeModelCrud> GetEmployee()
         {
-            EmployeeModelCrud employee = null;
+            //EmployeeModelCrud employee = null;
+            List<EmployeeModelCrud> employees = new List<EmployeeModelCrud>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -73,9 +75,10 @@ namespace EmployeeLogin.Models
                         {
                             if (reader.Read())
                             {
-                                employee = new EmployeeModelCrud
+
+                                EmployeeModelCrud employee = new EmployeeModelCrud
                                 {
-                                    //Id = Convert.ToInt32(reader["Id"]),
+                                    Id = Convert.ToInt32(reader["Id"]),
                                     Name = reader["Name"].ToString(),
                                     City = reader["City"].ToString(),
                                     Address = reader["Address"].ToString(),
@@ -83,6 +86,7 @@ namespace EmployeeLogin.Models
                                     Gender = reader["Gender"].ToString(),
                                     Country = reader["Country"].ToString()
                                 };
+                                employees.Add(employee);
                             }
                         }
                     }
@@ -94,7 +98,7 @@ namespace EmployeeLogin.Models
                 }
             }
 
-            return employee;
+            return employees;
         }
 
         public string? GetEmployee(object value)
@@ -106,8 +110,8 @@ namespace EmployeeLogin.Models
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                try
-                {
+                //try
+                //{
                     connection.Open();
 
                     if (employee.Id != 0)
@@ -155,12 +159,12 @@ namespace EmployeeLogin.Models
                               int newEmployeeId = Convert.ToInt32(insertCommand.ExecuteScalar());
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    // Handle exceptions or log them as needed
-                    Console.WriteLine($"Error: {ex.Message}");
-                }
+                //}
+                //catch (Exception ex)
+                //{
+                //    // Handle exceptions or log them as needed
+                //    Console.WriteLine($"Error: {ex.Message}");
+                //}
             }
         }
         public void DeleteEmployee(int id)
