@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Data.SqlClient;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
@@ -13,7 +14,6 @@ namespace EmployeeLogin.Models
             Console.WriteLine($"Connection String: {connectionString}");
             _connectionString = connectionString;
         }
-        
 
         public EmployeeModelCrud GetEmployee(int id)
         {
@@ -71,22 +71,23 @@ namespace EmployeeLogin.Models
                     using (SqlCommand command = new SqlCommand("Display_Employee12", connection))
                     {
 
+                        command.CommandType = CommandType.StoredProcedure;
+
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            if (reader.Read())
+                            while (reader.Read())
                             {
-
-                                EmployeeModelCrud employee = new EmployeeModelCrud
-                                {
-                                    Id = Convert.ToInt32(reader["Id"]),
-                                    Name = reader["Name"].ToString(),
-                                    City = reader["City"].ToString(),
-                                    Address = reader["Address"].ToString(),
-                                    Hobbies = reader["Hobbies"].ToString(),
-                                    Gender = reader["Gender"].ToString(),
-                                    Country = reader["Country"].ToString()
-                                };
-                                employees.Add(employee);
+                                    EmployeeModelCrud employee = new EmployeeModelCrud
+                                    {
+                                        Id = Convert.ToInt32(reader["Id"]),
+                                        Name = reader["Name"].ToString(),
+                                        City = reader["City"].ToString(),
+                                        Address = reader["Address"].ToString(),
+                                        Hobbies = reader["Hobbies"].ToString(),
+                                        Gender = reader["Gender"].ToString(),
+                                        Country = reader["Country"].ToString()
+                                    };
+                                    employees.Add(employee);                             
                             }
                         }
                     }
@@ -99,11 +100,6 @@ namespace EmployeeLogin.Models
             }
 
             return employees;
-        }
-
-        public string? GetEmployee(object value)
-        {
-            throw new NotImplementedException();
         }
 
         public void SaveEmployee(EmployeeModelCrud employee)
@@ -142,20 +138,12 @@ namespace EmployeeLogin.Models
                             "INSERT INTO Employee12 (Name, City, Address, Hobbies, Gender, Country) " +
                             "VALUES (@Name, @City, @Address, @Hobbies, @Gender, @Country); SELECT SCOPE_IDENTITY();", connection))
                         {
-                            //Guid newEmployeeId = Guid.NewGuid();
-                            //employee.Id = Guid.NewGuid().ToString();
-                            // Set parameters
-                           // insertCommand.Parameters.AddWithValue("@Id", newEmployeeId);
                             insertCommand.Parameters.AddWithValue("@Name", employee.Name);
                             insertCommand.Parameters.AddWithValue("@City", employee.City);
                             insertCommand.Parameters.AddWithValue("@Address", employee.Address);
                             insertCommand.Parameters.AddWithValue("@Hobbies", employee.Hobbies);
                             insertCommand.Parameters.AddWithValue("@Gender", employee.Gender);
                             insertCommand.Parameters.AddWithValue("@Country", employee.Country);
-                            //Guid insertedEmployeeId = (Guid)insertCommand.ExecuteScalar();
-                            //employee.Id = insertedEmployeeId;
-                            //employee.Id = convertedEmployeeId;
-                            // Execute the command and get the new employee ID
                               int newEmployeeId = Convert.ToInt32(insertCommand.ExecuteScalar());
                         }
                     }
@@ -167,7 +155,7 @@ namespace EmployeeLogin.Models
                 //}
             }
         }
-        public void DeleteEmployee(int id)
+        public int DeleteEmployee(int id)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -175,8 +163,10 @@ namespace EmployeeLogin.Models
                 {
                     connection.Open();
 
-                    using (SqlCommand deleteCommand = new SqlCommand("DELETE FROM Employee12 WHERE Id = @Id", connection))
+                    using (SqlCommand deleteCommand = new SqlCommand("Delete_Employee12", connection))
                     {
+
+                        deleteCommand.CommandType = CommandType.StoredProcedure;
                         deleteCommand.Parameters.AddWithValue("@Id", id);
                         deleteCommand.ExecuteNonQuery();
                     }
@@ -186,6 +176,48 @@ namespace EmployeeLogin.Models
                     // Handle exceptions or log them as needed
                     Console.WriteLine($"Error: {ex.Message}");
                 }
+            }
+            return id;
+        }
+
+        public void UpdateEmployee(EmployeeModelCrud employee)
+        {
+            throw new NotImplementedException();
+        }
+
+        public EmployeeModelCrud GetEmployeeById(int id)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                // Fetch the employee by ID
+                using (SqlCommand selectCommand = new SqlCommand(
+                    "SELECT * FROM Employee12 WHERE Id = @Id", connection))
+                {
+                    selectCommand.Parameters.AddWithValue("@Id", id);
+
+                    using (SqlDataReader reader = selectCommand.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            // Map data from the database to the EmployeeModelCrud object
+                            return new EmployeeModelCrud
+                            {
+                                Id = Convert.ToInt32(reader["Id"]),
+                                Name = reader["Name"].ToString(),
+                                City = reader["City"].ToString(),
+                                Address = reader["Address"].ToString(),
+                                Hobbies = reader["Hobbies"].ToString(),
+                                Gender = reader["Gender"].ToString(),
+                                Country = reader["Country"].ToString()
+                            };
+                        }
+                    }
+                }
+
+                // Return null if no employee is found with the given ID
+                return null;
             }
         }
     }

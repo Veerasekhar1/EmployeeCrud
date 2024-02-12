@@ -53,22 +53,23 @@ namespace EmployeeLogin.Controllers
 
             return View(employee);
         }
-        public IActionResult Edit(EmployeeModelCrud id)
+        public IActionResult Edit(int id)
         {
-            if (id == null)
+            if (id <= 0)
             {
                 return NotFound();
             }
 
-            var employee = _employeeRepository.GetEmployee();
+            var existingEmployee = _employeeRepository.GetEmployeeById(id);
 
-            if (employee == null)
+            if (existingEmployee == null)
             {
                 return NotFound();
             }
 
-            return View(employee);
+            return View(existingEmployee);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, EmployeeModelCrud employee)
@@ -86,11 +87,6 @@ namespace EmployeeLogin.Controllers
 
             return View(employee);
         }
-
-
-
-
-
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -98,21 +94,12 @@ namespace EmployeeLogin.Controllers
                 return NotFound();
             }
 
-            var employee = _employeeRepository.GetEmployee(id.Value);
+            int deletedEmployeeId = _employeeRepository.DeleteEmployee(id.Value);
 
-            if (employee == null)
+            if (deletedEmployeeId == 0)
             {
                 return NotFound();
             }
-
-            return View(employee);
-        }
-        // POST: Employee/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
-        {
-            _employeeRepository.DeleteEmployee(id); 
             return RedirectToAction(nameof(Index));
         }
     }
