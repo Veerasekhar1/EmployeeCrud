@@ -10,7 +10,7 @@ namespace EmployeeLogin.Models
         public void AddUser(RegisterModel obj)
         {
             var dbconfig = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
-            string s = dbconfig["getconn:DefaultConnection"];
+            string s = dbconfig["ConnectionStrings:DefaultConnection"];
             SqlConnection con = new SqlConnection(s);
             SqlCommand cmd = new SqlCommand("Sp_UsersAdd", con);
             cmd.CommandType = CommandType.StoredProcedure;

@@ -31,13 +31,24 @@
         <input asp-for="Gender" class="form-control" />
         <span asp-validation-for="Gender" class="text-danger"></span>
 
-
+@* 
         <label asp-for="Country"></label>
         <input asp-for="Country" class="form-control" />
+        <span asp-validation-for="Country" class="text-danger"></span> *@
+
+@* 
+        <label asp-for="Country"></label>
+        @Html.DropDownListFor(model => model.Country, new SelectList(Model.GetCountries(), "Value", "Text"), "Select a country", new { @class = "form-control" })
         <span asp-validation-for="Country" class="text-danger"></span>
+ *@
     </div>
 
     <!-- Add other input fields for City, Address, Hobbies, Gender, Country -->
 
-    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <button type="submit" class="btn btn-primary">Update</button>
+
+    <td>
+        <a asp-controller="EmployeeCrud" asp-action="Index">Cancel</a>
+    </td>
+
 </form>

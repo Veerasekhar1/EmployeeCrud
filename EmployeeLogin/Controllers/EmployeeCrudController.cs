@@ -1,5 +1,6 @@
 ﻿using EmployeeLogin.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EmployeeLogin.Controllers
 {
@@ -93,7 +94,7 @@ namespace EmployeeLogin.Controllers
             {
                 return NotFound();
             }
-
+          
             int deletedEmployeeId = _employeeRepository.DeleteEmployee(id.Value);
 
             if (deletedEmployeeId == 0)
@@ -101,6 +102,19 @@ namespace EmployeeLogin.Controllers
                 return NotFound();
             }
             return RedirectToAction(nameof(Index));
+        }
+
+        public List<SelectListItem> GetCountries()
+        {
+            // Replace this with your actual list of countries or fetch it from a database
+            var countries = new List<SelectListItem>
+    {
+        new SelectListItem { Value = "US", Text = "United States" },
+        new SelectListItem { Value = "CA", Text = "Canada" },
+        // Add more countries as needed
+    };
+
+            return countries;
         }
     }
 }

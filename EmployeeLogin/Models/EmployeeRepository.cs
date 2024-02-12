@@ -9,7 +9,7 @@ namespace EmployeeLogin.Models
         public bool CheckEmployee(string name,string password)
         {
             var dbconfig = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
-            string s = dbconfig["getconn:DefaultConnection"];
+            string s = dbconfig["ConnectionStrings:DefaultConnection"];
             bool flag = false;
             SqlConnection con = new SqlConnection(s);
             con.Open();

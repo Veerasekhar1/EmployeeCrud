@@ -9,5 +9,12 @@
         public string? Hobbies { get; set; }
         public  string? Gender { get; set; }
         public string? Country { get; set; }
+
+        public CountryModel Countries { get; set; }
+    }
+    public class CountryModel
+    {
+        public string? CountryCode { get; set; }
+        public string? CountryName { get; set; }
     }
 }
