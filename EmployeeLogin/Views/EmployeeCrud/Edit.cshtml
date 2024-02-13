@@ -36,11 +36,11 @@
         <input asp-for="Country" class="form-control" />
         <span asp-validation-for="Country" class="text-danger"></span> *@
 
-@* 
-        <label asp-for="Country"></label>
-        @Html.DropDownListFor(model => model.Country, new SelectList(Model.GetCountries(), "Value", "Text"), "Select a country", new { @class = "form-control" })
-        <span asp-validation-for="Country" class="text-danger"></span>
- *@
+        <div class="form-group">
+            @Html.LabelFor(model => model.SelectedCountryCode, "Country")
+            @Html.DropDownListFor(model => model.SelectedCountryCode, new SelectList(Model.CountriesList, "CountryCode", "CountryName"), "Select Country", new { @class = "form-control" })
+        </div>
+
     </div>
 
     <!-- Add other input fields for City, Address, Hobbies, Gender, Country -->

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics.Metrics;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace EmployeeLogin.Models
@@ -13,6 +14,16 @@ namespace EmployeeLogin.Models
         {
             Console.WriteLine($"Connection String: {connectionString}");
             _connectionString = connectionString;
+        }
+
+        private CountryModel MapCountryFromReader(SqlDataReader reader)
+        {
+            return new CountryModel
+            {
+                CountryCode = reader["CountryCode"].ToString(),
+                CountryName = reader["CountryName"].ToString()
+                // Map other properties if needed
+            };
         }
 
         public EmployeeModelCrud GetEmployee(int id)
@@ -42,7 +53,10 @@ namespace EmployeeLogin.Models
                                     Hobbies = reader["Hobbies"].ToString(),
                                     Gender = reader["Gender"].ToString(),
                                     Country = reader["Country"].ToString()
-                                };
+                            };
+                                CountryModel country = MapCountryFromReader(reader);
+                                employee.CountriesList = new List<CountryModel> { country };
+
                             }
                         }
                     }
@@ -220,5 +234,6 @@ namespace EmployeeLogin.Models
                 return null;
             }
         }
+        
     }
 }
