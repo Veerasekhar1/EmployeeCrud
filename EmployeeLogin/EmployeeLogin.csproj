@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\Home\" />
     <Folder Include="Views\RegistrationRepository\" />
   </ItemGroup>
 

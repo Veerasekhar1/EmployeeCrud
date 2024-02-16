@@ -16,15 +16,6 @@ namespace EmployeeLogin.Models
             _connectionString = connectionString;
         }
 
-        private CountryModel MapCountryFromReader(SqlDataReader reader)
-        {
-            return new CountryModel
-            {
-                CountryCode = reader["CountryCode"].ToString(),
-                CountryName = reader["CountryName"].ToString()
-                // Map other properties if needed
-            };
-        }
 
         public EmployeeModelCrud GetEmployee(int id)
         {
@@ -54,8 +45,6 @@ namespace EmployeeLogin.Models
                                     Gender = reader["Gender"].ToString(),
                                     Country = reader["Country"].ToString()
                             };
-                                CountryModel country = MapCountryFromReader(reader);
-                                employee.CountriesList = new List<CountryModel> { country };
 
                             }
                         }

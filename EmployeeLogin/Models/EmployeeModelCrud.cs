@@ -9,13 +9,5 @@
         public string? Hobbies { get; set; }
         public  string? Gender { get; set; }
         public string? Country { get; set; }
-
-        public IEnumerable<CountryModel> CountriesList { get; set; }
-        public string? SelectedCountryCode { get; set; }
-    }
-    public class CountryModel
-    {
-        public string? CountryCode { get; set; }
-        public string? CountryName { get; set; }
     }
 }

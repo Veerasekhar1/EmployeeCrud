@@ -73,7 +73,7 @@ namespace EmployeeLogin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, EmployeeModelCrud employee)
+        public IActionResult Edit(int id, EmployeeModelCrud employee,int id)
         {
             if (id != employee.Id)
             {
@@ -102,19 +102,6 @@ namespace EmployeeLogin.Controllers
                 return NotFound();
             }
             return RedirectToAction(nameof(Index));
-        }
-
-        public List<SelectListItem> GetCountries()
-        {
-            // Replace this with your actual list of countries or fetch it from a database
-            var countries = new List<SelectListItem>
-    {
-        new SelectListItem { Value = "US", Text = "United States" },
-        new SelectListItem { Value = "CA", Text = "Canada" },
-        // Add more countries as needed
-    };
-
-            return countries;
         }
     }
 }

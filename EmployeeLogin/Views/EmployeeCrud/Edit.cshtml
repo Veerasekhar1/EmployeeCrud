@@ -34,16 +34,14 @@
 
         <label asp-for="Country"></label>
         <input asp-for="Country" class="form-control" />
-        <span asp-validation-for="Country" class="text-danger"></span>
-
-       
+        <span asp-validation-for="Country" class="text-danger"></span>     
 
     </div>
 
     <!-- Add other input fields for City, Address, Hobbies, Gender, Country -->
-
-    <button type="submit" class="btn btn-primary">Update</button>
-
+    <td>
+    <input type="submit" value="Update" />
+    </td>
     <td>
         <a asp-controller="EmployeeCrud" asp-action="Index">Cancel</a>
     </td>
