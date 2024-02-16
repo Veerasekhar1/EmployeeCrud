@@ -2,18 +2,98 @@
 
 <a asp-controller="EmployeeCrud" asp-action="Create">Create</a>
 
-<h2>Employee List</h2>
+<h2 style="color:darkgoldenrod ;">Employee List</h2>
+<table width="100%" height="100%" cellpadding="1" cellspacing="1"
+       border="1" align="center">
+    <!DOCTYPE html>
+    <html>
 
-<table class="table">
+    <head>
+        <style>
+            table {
+                width: 100%;
+                border: 2px solid pink; /* Set border width and color */
+                border-collapse: collapse; /* Collapse borders to avoid spacing issues */
+            }
+
+            th, td {
+                border: 1px solid pink; /* Set border width and color for table cells */
+                padding: 8px; /* Add some padding for better appearance */
+                text-align: center; /* Center align content in cells */
+            }
+
+                th#id-header {
+                    color: blue; /* Set the color for the ID header */
+                }
+
+                th#name-header {
+                    color: green; /* Set the color for the Name header */
+                }
+
+                th#city-header {
+                    color: red; /* Set the color for the City header */
+                }
+
+                th#address-header {
+                    color: orange; /* Set the color for the Address header */
+                }
+
+                th#hobbies-header {
+                    color: purple; /* Set the color for the Hobbies header */
+                }
+
+                th#gender-header {
+                    color: brown; /* Set the color for the Gender header */
+                }
+
+                th#country-header {
+                    color: teal; /* Set the color for the Country header */
+                }
+
+
+            .id-cell {
+                color: blue; /* Set the color for the ID cell */
+            }
+
+            .name-cell {
+                color: green; /* Set the color for the Name cell */
+            }
+
+            .city-cell {
+                color: red; /* Set the color for the City cell */
+            }
+
+            .address-cell {
+                color: orange; /* Set the color for the Address cell */
+            }
+
+            .hobbies-cell {
+                color: purple; /* Set the color for the Hobbies cell */
+            }
+
+            .gender-cell {
+                color: brown; /* Set the color for the Gender cell */
+            }
+
+            .country-cell {
+                color: teal; /* Set the color for the Country cell */
+            }
+
+        </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    </head>
+    <body>
+<table width="100%" height="100%" cellpadding="1" cellspacing="1"
+       border="1" align="center" border-color="pink">
     <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>City</th>
-            <th>Address</th>
-            <th>Hobbies</th>
-            <th>Gender</th>
-            <th>Country</th>
+        <tr class="rcptFont">
+                    <th id="id-header">ID</th>
+                    <th id="name-header">Name</th>
+                    <th id="city-header">City</th>
+                    <th id="address-header">Address</th>
+                    <th id="hobbies-header">Hobbies</th>
+                    <th id="gender-header">Gender</th>
+                    <th id="country-header">Country</th>
             <!-- Add other table headers for City, Address, Hobbies, Gender, Country -->
             <th></th>
         </tr>
@@ -25,18 +105,18 @@
             foreach (var employee in Model)
             {
                 <tr>
-                    <td>@(employee.Id != null ? employee.Id.ToString() : "")</td>
-                    <td>@(employee.Name ?? "")</td> 
-                    <td>@(employee.City ?? "")</td>
-                    <td>@(employee.Address ?? "")</td>
-                    <td>@(employee.Hobbies ?? "")</td>
-                    <td>@(employee.Gender ?? "")</td>
-                    <td>@(employee.Country ?? "")</td>
+                            <td class="id-cell">@(employee.Id != null ? employee.Id.ToString() : "")</td>
+                            <td class="name-cell">@(employee.Name ?? "")</td>
+                            <td class="city-cell">@(employee.City ?? "")</td>
+                            <td class="address-cell">@(employee.Address ?? "")</td>
+                            <td class="hobbies-cell">@(employee.Hobbies ?? "")</td>
+                            <td class="gender-cell">@(employee.Gender ?? "")</td>
+                            <td class="country-cell">@(employee.Country ?? "")</td>
                     <!-- Add other table cells for City, Address, Hobbies, Gender, Country -->
                     <td>
-                        <a asp-action="Details" asp-route-id="@employee.Id" asp-controller="EmployeeCrud">Details</a> |
-                        <a asp-action="Edit" asp-route-id="@employee.Id" asp-controller="EmployeeCrud">Edit</a> |
-                        <a asp-action="Delete" asp-route-id="@employee.Id" onclick="return confirm('Are you sure you want to delete this record?');">Delete</a>
+                                <a asp-action="Details" asp-route-id="@employee.Id" asp-controller="EmployeeCrud"> <i class="fas fa-info-circle"></i></a> |
+                                <a asp-action="Edit" asp-route-id="@employee.Id" asp-controller="EmployeeCrud"> <i class="fas fa-edit"></i></a> |
+                                <a asp-action="Delete" asp-route-id="@employee.Id" onclick="return confirm('Are you sure you want to delete this record?');"> <i class="fas fa-trash-alt"></i></a>
                     </td>
                 </tr>
             }
@@ -48,3 +128,5 @@
     </tbody>
 </table>
 <span>@ViewBag.message</span>
+    </body>
+</html>
