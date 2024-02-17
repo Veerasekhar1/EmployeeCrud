@@ -1,6 +1,14 @@
 ﻿@model EmployeeModelCrud
 
 <h2>Edit Employee</h2>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
 
 <form asp-action="Edit" method="post">
     @Html.AntiForgeryToken()
@@ -12,14 +20,17 @@
         <input asp-for="Name" class="form-control" />
         <span asp-validation-for="Name" class="text-danger"></span>
 
+
+        <label asp-for="Address"></label>
+        <input asp-for="Address" class="form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+
+
         <label asp-for="City"></label>
         <input asp-for="City" class="form-control" />
         <span asp-validation-for="City" class="text-danger"></span>
 
 
-        <label asp-for="Address"></label>
-        <input asp-for="Address" class="form-control" />
-        <span asp-validation-for="Address" class="text-danger"></span>
 
 
         <label asp-for="Hobbies"></label>
@@ -39,11 +50,14 @@
     </div>
 
     <!-- Add other input fields for City, Address, Hobbies, Gender, Country -->
-    <td>
-    <input type="submit" value="Update" />
+        <td>
+            <input type="submit" value="Update" class="green-submit-button" />
+
     </td>
     <td>
         <a asp-controller="EmployeeCrud" asp-action="Index">Cancel</a>
     </td>
 
 </form>
+</body>
+</html>

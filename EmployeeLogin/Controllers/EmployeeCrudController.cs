@@ -73,7 +73,7 @@ namespace EmployeeLogin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, EmployeeModelCrud employee,int id)
+        public IActionResult Edit(int id, EmployeeModelCrud employee,int id1)
         {
             if (id != employee.Id)
             {

@@ -20,3 +20,11 @@ html {
 body {
   margin-bottom: 60px;
 }
+.green-submit-button {
+    background-color: #00aa00; /* Set your desired green color */
+    color: #fff; /* Set the text color */
+    padding: 10px 20px; /* Adjust padding as needed */
+    border: none; /* Remove border if not needed */
+    border-radius: 5px; /* Add rounded corners if desired */
+    cursor: pointer; /* Add a pointer cursor on hover */
+}
