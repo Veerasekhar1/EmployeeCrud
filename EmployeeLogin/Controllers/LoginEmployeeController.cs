@@ -23,7 +23,7 @@ namespace EmployeeLogin.Controllers
         }
         [HttpPost]
         public IActionResult CheckLogin(EmployeeModel obj)
-        {
+          {
             try
             {
                 if (ModelState.IsValid)
@@ -49,6 +49,6 @@ namespace EmployeeLogin.Controllers
                 return View();
             }
             return View();
-        }
+           }
     }
 }

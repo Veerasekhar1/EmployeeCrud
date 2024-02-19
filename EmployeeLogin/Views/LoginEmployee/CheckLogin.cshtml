@@ -1,6 +1,11 @@
 ﻿@model EmployeeLogin.Models.EmployeeModel
 
 <h2>Login</h2>
+<html>
+    <head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
 <form asp-controller="LoginEmployee" asp-action="CheckLogin" method="post">
     <table>
         <tr>
@@ -14,7 +19,9 @@
             <td><span asp-validation-for="Password"></span></td>
         </tr>
         <td>
-            <input type="submit" value="Login" />
+                <input type="submit" value="Login" class="btn btn-success" /> 
+                @*
+                <button type="button" class="btn btn-success">Login</button> *@
         </td>
         <td>
             <a asp-controller="Registration" asp-action="AddUser">Signin</a>
@@ -23,4 +30,5 @@
 </form>
 
 <span>@ViewBag.message</span>
-
+</body>
+</html>

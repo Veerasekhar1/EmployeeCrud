@@ -10,8 +10,11 @@ string? connectionString = builder.Configuration.GetConnectionString("DefaultCon
 builder.Services.AddScoped<IEmployeeCrud, EmployeeRepositoryCrud>(sp =>
     new EmployeeRepositoryCrud(connectionString));
 
-builder.Services.AddControllersWithViews();
-
+builder.Services.AddControllersWithViews().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+    options.JsonSerializerOptions.PropertyNamingPolicy = null;
+});
 builder.Services.AddAuthorization();
 var app = builder.Build();
 
@@ -22,6 +25,7 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",

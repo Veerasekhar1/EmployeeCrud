@@ -1,4 +1,6 @@
-﻿namespace EmployeeLogin.Models
+﻿using Newtonsoft.Json;
+
+namespace EmployeeLogin.Models
 {
     public class EmployeeModelCrud
     {

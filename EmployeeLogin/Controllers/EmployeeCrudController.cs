@@ -14,7 +14,7 @@ namespace EmployeeLogin.Controllers
         }
 
         public IActionResult Index()
-        {
+          {
             var employees = _employeeRepository.GetEmployee();
             return View("Index", employees);
         }
@@ -34,9 +34,9 @@ namespace EmployeeLogin.Controllers
         {
             return View();
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(EmployeeModelCrud employee)
+        [HttpPost("EmployeeCrud/Create")]
+        //[ValidateAntiForgeryToken]
+        public IActionResult Create([FromBody] EmployeeModelCrud employee)
         {
             try
             {
@@ -71,9 +71,9 @@ namespace EmployeeLogin.Controllers
             return View(existingEmployee);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, EmployeeModelCrud employee,int id1)
+        [HttpPut("EmployeeCrud/Edit")]
+       // [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id,[FromBody] EmployeeModelCrud employee)
         {
             if (id != employee.Id)
             {
@@ -89,17 +89,33 @@ namespace EmployeeLogin.Controllers
             return View(employee);
         }
         public IActionResult Delete(int? id)
-        {
-            if (id == null)
+         {
+            try
             {
-                return NotFound();
-            }
-          
-            int deletedEmployeeId = _employeeRepository.DeleteEmployee(id.Value);
+                if (id == null)
+                {
+                    return NotFound();
+                }
+                EmployeeModelCrud employee = _employeeRepository.GetEmployee(id.Value);
+                if (employee!=null)
+                {
+                    int deletedEmployeeId = _employeeRepository.DeleteEmployee(id.Value);
+                }
+                else
+                {
+                    return NotFound("No record found in the database for deletion.");
 
-            if (deletedEmployeeId == 0)
+                }
+
+                //if (deletedEmployeeId == 0)
+                //{
+                //    return NotFound("No record found in the database for deletion.");
+
+                //}
+            }
+            catch (Exception ex)
             {
-                return NotFound();
+                Console.WriteLine($"An error occurred: {ex.Message}");
             }
             return RedirectToAction(nameof(Index));
         }

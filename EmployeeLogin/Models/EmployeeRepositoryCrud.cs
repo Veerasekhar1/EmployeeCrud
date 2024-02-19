@@ -168,10 +168,11 @@ namespace EmployeeLogin.Models
 
                     using (SqlCommand deleteCommand = new SqlCommand("Delete_Employee12", connection))
                     {
-
-                        deleteCommand.CommandType = CommandType.StoredProcedure;
-                        deleteCommand.Parameters.AddWithValue("@Id", id);
-                        deleteCommand.ExecuteNonQuery();
+                        
+                            deleteCommand.CommandType = CommandType.StoredProcedure;
+                            deleteCommand.Parameters.AddWithValue("@Id", id);
+                            deleteCommand.ExecuteNonQuery(); 
+                       
                     }
                 }
                 catch (Exception ex)
