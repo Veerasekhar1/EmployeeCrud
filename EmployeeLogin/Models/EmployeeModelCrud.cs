@@ -11,5 +11,6 @@ namespace EmployeeLogin.Models
         public string? Hobbies { get; set; }
         public  string? Gender { get; set; }
         public string? Country { get; set; }
+       // public bool ? IsDeleted { get; set; }
     }
 }

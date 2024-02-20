@@ -70,7 +70,6 @@ namespace EmployeeLogin.Controllers
 
             return View(existingEmployee);
         }
-
         [HttpPut("EmployeeCrud/Edit")]
        // [ValidateAntiForgeryToken]
         public IActionResult Edit(int id,[FromBody] EmployeeModelCrud employee)
@@ -104,7 +103,6 @@ namespace EmployeeLogin.Controllers
                 else
                 {
                     return NotFound("No record found in the database for deletion.");
-
                 }
 
                 //if (deletedEmployeeId == 0)
@@ -118,6 +116,6 @@ namespace EmployeeLogin.Controllers
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
             return RedirectToAction(nameof(Index));
-        }
+         }
     }
 }
