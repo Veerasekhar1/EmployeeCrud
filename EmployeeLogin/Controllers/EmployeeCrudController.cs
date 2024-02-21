@@ -34,9 +34,10 @@ namespace EmployeeLogin.Controllers
         {
             return View();
         }
-        [HttpPost("EmployeeCrud/Create")]
-        //[ValidateAntiForgeryToken]
-        public IActionResult Create([FromBody] EmployeeModelCrud employee)
+        [HttpPost]
+        // [HttpPost("EmployeeCrud/Create")]
+        //[ValidateAntiForgeryToken] [FromBody] 
+        public IActionResult Create(EmployeeModelCrud employee)
         {
             try
             {
@@ -70,9 +71,10 @@ namespace EmployeeLogin.Controllers
 
             return View(existingEmployee);
         }
-        [HttpPut("EmployeeCrud/Edit")]
-       // [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id,[FromBody] EmployeeModelCrud employee)
+        [HttpPost]
+        // [HttpPut("EmployeeCrud/Edit")]
+        // [ValidateAntiForgeryToken] [FromBody] 
+        public IActionResult Edit(int id,EmployeeModelCrud employee)
         {
             if (id != employee.Id)
             {

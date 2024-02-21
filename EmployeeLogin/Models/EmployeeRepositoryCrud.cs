@@ -118,7 +118,7 @@ namespace EmployeeLogin.Models
                         // Update existing employee
                         using (SqlCommand updateCommand = new SqlCommand(
                             "UPDATE Employee12 SET Name = @Name, City = @City, Address = @Address, " +
-                            "Hobbies = @Hobbies, Gender = @Gender, Country = @Country WHERE Id = @Id", connection))
+                            "Hobbies = @Hobbies, Gender = @Gender, Country = @Country, IsDeleted=@IsDeleted WHERE Id = @Id", connection))
                         {
                             // Set parameters
                             updateCommand.Parameters.AddWithValue("@Id", employee.Id);
@@ -128,9 +128,9 @@ namespace EmployeeLogin.Models
                             updateCommand.Parameters.AddWithValue("@Hobbies", employee.Hobbies);
                             updateCommand.Parameters.AddWithValue("@Gender", employee.Gender);
                             updateCommand.Parameters.AddWithValue("@Country", employee.Country);
-
-                            // Execute the command
-                            updateCommand.ExecuteNonQuery();
+                            updateCommand.Parameters.AddWithValue("@IsDeleted", false);
+                        // Execute the command
+                        updateCommand.ExecuteNonQuery();
                         }
                     }
                     else
@@ -138,8 +138,8 @@ namespace EmployeeLogin.Models
                         // Insert new employee
 
                         using (SqlCommand insertCommand = new SqlCommand(
-                            "INSERT INTO Employee12 (Name, City, Address, Hobbies, Gender, Country) " +
-                            "VALUES (@Name, @City, @Address, @Hobbies, @Gender, @Country); SELECT SCOPE_IDENTITY();", connection))
+                            "INSERT INTO Employee12 (Name, City, Address, Hobbies, Gender, Country,IsDeleted) " +
+                            "VALUES (@Name, @City, @Address, @Hobbies, @Gender, @Country,@IsDeleted); SELECT SCOPE_IDENTITY();", connection))
                         {
                             insertCommand.Parameters.AddWithValue("@Name", employee.Name);
                             insertCommand.Parameters.AddWithValue("@City", employee.City);
@@ -147,7 +147,8 @@ namespace EmployeeLogin.Models
                             insertCommand.Parameters.AddWithValue("@Hobbies", employee.Hobbies);
                             insertCommand.Parameters.AddWithValue("@Gender", employee.Gender);
                             insertCommand.Parameters.AddWithValue("@Country", employee.Country);
-                              int newEmployeeId = Convert.ToInt32(insertCommand.ExecuteScalar());
+                            insertCommand.Parameters.AddWithValue("@IsDeleted", false);
+                        int newEmployeeId = Convert.ToInt32(insertCommand.ExecuteScalar());
                         }
                     }
                 //}
@@ -166,13 +167,22 @@ namespace EmployeeLogin.Models
                 {
                     connection.Open();
 
-                    using (SqlCommand deleteCommand = new SqlCommand("Delete_Employee12", connection))
+                    //using (SqlCommand deleteCommand = new SqlCommand("Delete_Employee12", connection))
+                    //{
+
+                    //        deleteCommand.CommandType = CommandType.StoredProcedure;
+                    //        deleteCommand.Parameters.AddWithValue("@Id", id);
+                    //        deleteCommand.ExecuteNonQuery(); 
+
+                    //}
+                    using (SqlCommand deleteCommand = new SqlCommand("UPDATE Employee12 SET IsDeleted = @isDeleted where Id=@Id", connection))
                     {
-                        
-                            deleteCommand.CommandType = CommandType.StoredProcedure;
-                            deleteCommand.Parameters.AddWithValue("@Id", id);
-                            deleteCommand.ExecuteNonQuery(); 
-                       
+
+                        //deleteCommand.CommandType = CommandType.StoredProcedure;
+                        deleteCommand.Parameters.AddWithValue("@Id", id);
+                        deleteCommand.Parameters.AddWithValue("@isDeleted", true);
+                        deleteCommand.ExecuteNonQuery();
+
                     }
                 }
                 catch (Exception ex)
