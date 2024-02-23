@@ -1,6 +1,7 @@
 ﻿using EmployeeLogin.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
 
 namespace EmployeeLogin.Controllers
 {
@@ -34,9 +35,8 @@ namespace EmployeeLogin.Controllers
         {
             return View();
         }
-        [HttpPost]
-        // [HttpPost("EmployeeCrud/Create")]
-        //[ValidateAntiForgeryToken] [FromBody] 
+        [HttpPost("EmployeeCrud/Create")]
+        // [ValidateAntiForgeryToken]
         public IActionResult Create(EmployeeModelCrud employee)
         {
             try
@@ -46,15 +46,15 @@ namespace EmployeeLogin.Controllers
                     _employeeRepository.SaveEmployee(employee);
                     return RedirectToAction(nameof(Index));
                 }
+                
             }
             catch(Exception ex)
             {
                 ViewBag.message = "RECOR IS NOT INSERT: " + ex.Message;
                 return View(nameof(Index));
             }
-
             return View(employee);
-        }
+         } 
         public IActionResult Edit(int id)
         {
             if (id <= 0)
@@ -71,10 +71,9 @@ namespace EmployeeLogin.Controllers
 
             return View(existingEmployee);
         }
-        [HttpPost]
-        // [HttpPut("EmployeeCrud/Edit")]
-        // [ValidateAntiForgeryToken] [FromBody] 
-        public IActionResult Edit(int id,EmployeeModelCrud employee)
+        [HttpPut("EmployeeCrud/Edit")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, [FromBody] EmployeeModelCrud employee)
         {
             if (id != employee.Id)
             {

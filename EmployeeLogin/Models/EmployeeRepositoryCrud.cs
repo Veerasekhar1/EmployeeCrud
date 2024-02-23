@@ -42,7 +42,8 @@ namespace EmployeeLogin.Models
                                     City = reader["City"].ToString(),
                                     Address = reader["Address"].ToString(),
                                     Hobbies = reader["Hobbies"].ToString(),
-                                    Gender = reader["Gender"].ToString(),
+                                    // Gender = reader["Gender"].ToString(),
+                                    Gender = (Gender)Enum.Parse(typeof(Gender),  reader["Gender"].ToString()),
                                     Country = reader["Country"].ToString()
                             };
 
@@ -59,6 +60,7 @@ namespace EmployeeLogin.Models
 
             return employee;
         }
+
 
         public IEnumerable<EmployeeModelCrud> GetEmployee()
         {
@@ -87,10 +89,20 @@ namespace EmployeeLogin.Models
                                         City = reader["City"].ToString(),
                                         Address = reader["Address"].ToString(),
                                         Hobbies = reader["Hobbies"].ToString(),
-                                        Gender = reader["Gender"].ToString(),
-                                        Country = reader["Country"].ToString()
+                                        //Gender = reader["Gender"].ToString(),
+                                        //  Gender = (Gender)Enum.Parse(typeof(Gender), reader["Gender"].ToString()),
+
+                                        Country = reader["Country"].ToString(),
+
+                                        Gender = Enum.TryParse(reader["Gender"].ToString(), out Gender genderValue)
+                                ? genderValue
+                                : Gender.Unknown
                                     };
-                                    employees.Add(employee);                             
+                                if (!employees.Any(e => e.Gender == employee.Gender))
+                                {
+                                    employees.Add(employee);
+                                }
+                                // employees.Add(employee);                             
                             }
                         }
                     }
@@ -139,7 +151,7 @@ namespace EmployeeLogin.Models
 
                         using (SqlCommand insertCommand = new SqlCommand(
                             "INSERT INTO Employee12 (Name, City, Address, Hobbies, Gender, Country,IsDeleted) " +
-                            "VALUES (@Name, @City, @Address, @Hobbies, @Gender, @Country,@IsDeleted); SELECT SCOPE_IDENTITY();", connection))
+                            "VALUES (@Name, @City, @Address, @Hobbies, @Gender, @Country, @IsDeleted); SELECT SCOPE_IDENTITY();", connection))
                         {
                             insertCommand.Parameters.AddWithValue("@Name", employee.Name);
                             insertCommand.Parameters.AddWithValue("@City", employee.City);
@@ -223,7 +235,8 @@ namespace EmployeeLogin.Models
                                 City = reader["City"].ToString(),
                                 Address = reader["Address"].ToString(),
                                 Hobbies = reader["Hobbies"].ToString(),
-                                Gender = reader["Gender"].ToString(),
+                                // Gender = reader["Gender"].ToString(),
+                                Gender = (Gender)Enum.Parse(typeof(Gender), reader["Gender"].ToString()),
                                 Country = reader["Country"].ToString()
                             };
                         }
